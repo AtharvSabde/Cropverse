@@ -1,24 +1,73 @@
 # CropVerse 🌱
 
-> **Smart Environment Monitoring for Precision Agriculture**
+> **Smart Environment Monitoring & Control System for Precision Agriculture**
 
+CropVerse is an integrated IoT solution combining intelligent hardware sensors with cloud-based analytics to revolutionize post-harvest storage management and reduce agricultural losses.
 
+---
 
+## 🔧 Hardware System (IoT Sensors & Control)
 
-## 🎯 Key Features
+### 🌡️ Environmental Monitoring
+Our Arduino-based sensor nodes continuously monitor critical storage parameters:
+- **Temperature sensing** - Real-time thermal monitoring
+- **Humidity tracking** - Precise RH% measurement with DHT22/industrial probes
+- **Methane detection** - Early spoilage detection through gas analysis (MQ-x sensors)
+
+### ⚡ Automated Control Systems
+**Climate Control:**
+- **Exhaust fans** (2× 300mm, 1000 CFM) - Automatic ventilation on threshold breach
+- **Circulation fans** (4× 18" industrial) - Uniform air distribution
+- **Dehumidifier** (50-90 L/day) - Moisture control during humid conditions
+- **Humidifier** - Humidity boost when needed
+- **Cooling blowers** (2× ducted) - Targeted cooling along storage trays
+- **Heating system** - Temperature stabilization during cold periods
+
+**Preservation Systems:**
+- **Natural preservative release** - Controlled dispensing of eugenol & thymol sachets
+- **PCO air sanitizer** - Photocatalytic oxidation (UV+TiO₂) for air purification
+
+### 🏗️ Physical Infrastructure
+- **8 galvanized steel racks** - Robust GI tubing/angle construction
+- **40 FRP storage trays** - Corrosion-resistant, food-grade molded trays
+- **Solar power system** (4-5 kW) - Sustainable energy generation (~20 kWh/day)
+- **Battery backup** (10 kWh Li-ion) - Uninterrupted operation during outages
+
+### 🔌 IoT Controller Architecture
+- **Microcontroller**: Arduino/Raspberry Pi based control unit
+- **Relay modules** - Automated device switching
+- **Contactors & surge protection** - Safe electrical integration
+- **WiFi/GSM connectivity** - Real-time data transmission to cloud
+- **Compact JSON protocol** - Optimized for low-bandwidth IoT environments
+
+### 🎯 Hardware Functionality
+- Continuous 24/7 environmental monitoring
+- Automatic ventilation control on threshold exceed
+- Ideal humidity balance via coordinated dehumidifier + humidifier operation
+- Smart cooling and heating for stable temperature maintenance
+- Early spoilage detection through methane spike analysis
+- Immediate removal of contaminated air to prevent chain-rotting
+- Controlled release of natural preservatives
+- Real-time alerts sent to farmer's phone
+- Automated system that extends shelf life and reduces losses
+
+---
+
+## 💻 Software System (Cloud Platform & Analytics)
 
 ### 🔌 Secure Device Integration
 - **Authenticated device onboarding** with unique credentials for each sensor node
 - **Resilient data ingestion** tolerating intermittent connectivity and network issues
-- **Compact JSON protocol** optimized for low-bandwidth IoT environments
 - **Batch and real-time submission** support for flexible deployment scenarios
+- **Schema validation** ensuring data consistency and quality
 
-### 📊 Real-Time Monitoring & Analytics
+### 📊 Real-Time Monitoring & Analytics Dashboard
 - **Live dashboard updates** via Firebase real-time listeners
 - **Time-series trend analysis** with configurable aggregation windows (minute/hour/day)
 - **Statistical anomaly detection** using moving averages and z-score analysis
 - **Cross-sensor correlation matrices** to identify environmental relationships
 - **Pre-computed aggregations** for instant historical query performance
+- **Interactive data visualization** - Charts, graphs, and trend indicators
 
 ### 🚨 Intelligent Alerting System
 - **Multi-tier threshold configuration** (info/warning/critical severity levels)
@@ -40,7 +89,6 @@
 - **Comprehensive audit logging** for compliance and traceability
 
 ### 📈 Advanced Data Management
-- **Schema validation** ensuring data consistency and quality
 - **Sanity checks** filtering malformed or spurious readings
 - **UTC timestamp normalization** with timezone-aware reporting
 - **Optimized indexing strategy** balancing performance and cost
@@ -51,14 +99,17 @@
 ## 🏗️ System Architecture
 
 ```
-┌─────────────────┐
-│  IoT Sensors    │  (Arduino-based nodes)
-│  Temperature    │
-│  Humidity       │
-│  Gas Detection  │
-└────────┬────────┘
-         │ HTTPS/JSON
-         ▼
+┌─────────────────────────────────────────────────────┐
+│         IoT Hardware Layer (On-Site)                │
+│  ┌──────────────────────────────────────────────┐  │
+│  │  Arduino/RPi Controller                       │  │
+│  │  - Temp/Humidity/Gas Sensors                  │  │
+│  │  - Relay Controls (fans, HVAC, preservatives) │  │
+│  │  - Solar Power + Battery Management           │  │
+│  └─────────────────┬────────────────────────────┘  │
+└────────────────────┼───────────────────────────────┘
+                     │ HTTPS/JSON over WiFi/GSM
+                     ▼
 ┌─────────────────────────────────────────────────────┐
 │           Firebase Cloud Functions                  │
 │  ┌──────────────┐  ┌─────────────┐  ┌───────────┐ │
@@ -88,11 +139,28 @@
 
 ## 🚀 Getting Started
 
-### Prerequisites
-- Python 3.9 or higher
-- Node.js 16+ (for frontend development)
-- Firebase CLI
-- Arduino IDE (for device firmware)
+### Hardware Setup
+
+1. **Assemble the physical infrastructure**
+   - Install galvanized steel racks and FRP trays
+   - Mount all HVAC equipment (fans, dehumidifier, humidifier, blowers)
+   - Set up solar panels and battery system
+
+2. **Wire the IoT controller**
+   - Connect all sensors to Arduino/RPi (temperature, humidity, methane)
+   - Wire relay modules to control fans, HVAC, and preservation systems
+   - Install contactors and surge protection
+   - Configure WiFi/GSM connectivity
+
+3. **Flash Arduino firmware**
+   - Open `arduino/sensor_node/sensor_node.ino` in Arduino IDE
+   - Configure WiFi credentials and API endpoint
+   - Upload to your Arduino board
+
+4. **Test hardware systems**
+   - Verify all sensors are reading correctly
+   - Test automated control responses (fan activation, etc.)
+   - Confirm data transmission to cloud
 
 ### Backend Setup
 
@@ -153,52 +221,13 @@ firebase serve
 firebase deploy --only hosting
 ```
 
-### Device Setup
+### Device Registration
 
-1. **Flash Arduino firmware**
-- Open `arduino/sensor_node/sensor_node.ino` in Arduino IDE
-- Configure WiFi credentials and API endpoint
-- Upload to your Arduino board
+1. **Register device in admin dashboard**
+   - Use the admin dashboard to register new devices
+   - Note the device credentials for configuration
+   - Configure threshold parameters for your crop type
 
-2. **Register device**
-- Use the admin dashboard to register new devices
-- Note the device credentials for configuration
-
----
-
-## 📚 API Documentation
-
-### Core Endpoints
-
-#### Analytics
-- `GET /api/analytics/correlations` - Correlation matrix across sensors
-- `GET /api/analytics/summary` - Daily summaries and aggregations
-- `POST /api/analytics/summary/<date>/calculate` - Trigger recalculation
-- `GET /api/analytics/trends` - Time-series data for trends
-
-#### Device Integration
-- `POST /api/arduino/data` - Receive sensor telemetry
-- `GET /api/arduino/health` - Device connectivity check
-- `POST /api/arduino/test` - Verify device authentication
-
-#### Dashboard
-- `GET /api/dashboard` - Complete dashboard payload
-- `GET /api/dashboard/alerts` - Alert list with filters
-- `GET /api/dashboard/readings` - Latest sensor readings
-
-#### AI Chatbot
-- `POST /api/chatbot/message` - Send message and receive AI response
-- `GET /api/chatbot/context` - Current system context
-- `GET /api/chatbot/suggestions` - Suggested prompts
-
-#### Settings & Thresholds
-- `GET /api/settings/thresholds` - Retrieve alert thresholds
-- `PUT /api/settings/thresholds` - Update threshold configuration
-- `POST /api/settings/reset` - Reset to default settings
-
-For complete API documentation, see [BACKEND_API_DOCS.md](docs/BACKEND_API_DOCS.md)
-
----
 
 ## 🧪 Testing & Development
 
@@ -226,69 +255,36 @@ pytest tests/ --cov=functions
 
 ## 👥 Team
 
-CropVerse is developed by a dedicated cross-functional team:
+CropVerse is developed by a dedicated cross-functional team of six engineers and researchers:
 
 | Role | Name | Responsibilities |
 |------|------|------------------|
-| 🎯 **Project Lead & Backend** | **Priya Sharma** | System architecture, core backend services, analytics orchestration |
-| 📊 **Data & Analytics** | **Rahul Kulkarni** | Aggregation pipelines, trend analysis, anomaly detection |
-| 🎨 **Frontend Lead** | **Meera Desai** | Dashboard UX, data visualization, real-time client integration |
-| 🔧 **Embedded Systems** | **Arjun Patil** | Device firmware, telemetry protocols, hardware diagnostics |
-| 🤖 **AI & Chatbot** | **Sneha Rao** | AI assistant integration, prompt engineering, conversational flows |
-| 🔐 **DevOps & Security** | **Karan Verma** | Deployment automation, security rules, operational best practices |
+| 💻 **Software Architect & Full-Stack Lead** | **Atharv Sabde** | End-to-end software development: Firebase cloud functions architecture, real-time analytics engine, RESTful API design, web dashboard development, AI chatbot integration, database schema design, authentication & security implementation, frontend–backend orchestration |
+| ⚡ **Hardware Systems Lead** | **Vaidehi Musale** | IoT infrastructure design and deployment: sensor network architecture, Arduino/RPi controller programming, HVAC automation systems integration, relay control logic, power management (solar + battery), field deployment coordination, hardware–software interface protocols |
+| 🔬 **Hardware Engineering & Research Specialist** | **Bhumika Pise** | Sensor calibration and testing, environmental control system optimization, preservation technology research (eugenol, thymol, PCO), agricultural domain analysis, post-harvest storage methodologies, hardware component selection and procurement, prototype testing and validation |
+| 📋 **Project Coordination & Agricultural Research** | **Rohit Rode** | Project management and strategic planning, stakeholder communication, agricultural domain research, farmer requirement analysis, market feasibility studies, documentation and presentation, compliance and regulatory research, team coordination and resource planning |
+| 🔧 **Systems Integration Engineer** | **Rahul Mathe** | Hardware–software integration troubleshooting, system testing and quality assurance, research validation and experimentation, deployment assistance, cross-subsystem performance optimization, technical documentation, backup development support |
+| ⚙️ **Hardware Operations Specialist** | **Mayuri More** | Hardware assembly and installation support, IoT device configuration assistance, field testing and diagnostics, sensor maintenance protocols, equipment logistics coordination, hardware documentation, operational support for deployment activities |
 
 ---
 
 ## 🏆 Achievements
 
-**Smart India Hackathon 2025 Finalist** - Selected among thousands of submissions nationwide for innovative approach to agricultural technology and sustainability.
+**Smart India Hackathon 2025 Finalist**  
+Selected among thousands of submissions nationwide for an innovative approach to agricultural technology and sustainability.
 
----
-
-## 📖 Documentation
-
-- [Frontend Integration Guide](docs/FRONTEND_INTEGRATION_GUIDE.md)
-- [Backend API Reference](docs/BACKEND_API_DOCS.md)
-- [Device Integration Manual](docs/DEVICE_INTEGRATION.md)
-- [Deployment Guide](docs/DEPLOYMENT.md)
-- [Security Best Practices](docs/SECURITY.md)
-
----
 
 ## 🤝 Contributing
 
 We welcome contributions from the community! Please follow these steps:
 
 1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
+2. Create a feature branch 
+3. Commit your changes 
+4. Push to the branch 
 5. Open a Pull Request
 
-Please read [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines.
 
----
-
-## 📝 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
----
-
-## 📞 Contact & Support
-
-For questions, feature requests, or partnership opportunities:
-
-- **GitHub Issues**: [Create an issue](https://github.com/yourusername/cropverse-firebase/issues)
-- **Email**: cropverse.team@example.com
-- **Documentation**: [Read the docs](https://cropverse.example.com/docs)
-
----
-
-## 🙏 Acknowledgments
-
-- Smart India Hackathon 2025 organizing committee
 - Firebase and Google Cloud Platform teams
 - Open-source community for invaluable tools and libraries
 - Agricultural experts who provided domain guidance
-
