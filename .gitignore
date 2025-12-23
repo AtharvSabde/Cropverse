@@ -1,0 +1,268 @@
+# ============================================================================
+# Firebase & Google Cloud
+# ============================================================================
+.firebase/
+.firebaserc
+firebase-debug.log*
+firebase-debug.*.log*
+ui-debug.log
+.dataconnect/
+
+# Firebase credentials and service accounts
+*serviceAccountKey*.json
+*service-account*.json
+*firebase-adminsdk*.json
+
+# Firebase config - kept private
+firebase.json
+
+# Keep these Firebase files tracked
+!firestore.indexes.json
+!firestore.rules
+!storage.rules
+!database.rules.json
+
+# ============================================================================
+# Python
+# ============================================================================
+
+# Virtual Environments
+venv/
+env/
+.venv/
+.env/
+ENV/
+env.bak/
+venv.bak/
+functions/venv/
+functions/.venv/
+functions/env/
+
+# Python cache and compiled files
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.pyo
+*.pyd
+.Python
+
+# Distribution / packaging
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# PyInstaller
+*.manifest
+*.spec
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# pyenv
+.python-version
+
+# Celery
+celerybeat-schedule
+celerybeat.pid
+
+# SageMath parsed files
+*.sage.py
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Pyre type checker
+.pyre/
+
+# ============================================================================
+# Environment Variables & Secrets
+# ============================================================================
+.env
+.env.*
+.env.local
+.env.*.local
+.env.yaml
+.env.yml
+functions/.env
+functions/.env.*
+functions/.env.yaml
+functions/.env.yml
+*.env
+
+# ============================================================================
+# Node.js (if using Cloud Functions with Node.js)
+# ============================================================================
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+.npm
+.eslintcache
+.node_repl_history
+*.tgz
+.yarn-integrity
+package-lock.json
+yarn.lock
+
+# ============================================================================
+# IDEs and Editors
+# ============================================================================
+
+# VSCode
+.vscode/
+*.code-workspace
+
+# PyCharm
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# Vim
+*.swp
+*.swo
+*~
+.netrwhist
+
+# Emacs
+*~
+\#*\#
+/.emacs.desktop
+/.emacs.desktop.lock
+*.elc
+auto-save-list
+tramp
+
+# ============================================================================
+# Operating System Files
+# ============================================================================
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+._*
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+*.stackdump
+[Dd]esktop.ini
+$RECYCLE.BIN/
+*.cab
+*.msi
+*.msix
+*.msm
+*.msp
+*.lnk
+
+# Linux
+.directory
+.Trash-*
+.nfs*
+
+# ============================================================================
+# Logs
+# ============================================================================
+logs/
+*.log
+log/
+*.log.*
+
+# ============================================================================
+# Temporary and Build Files
+# ============================================================================
+tmp/
+temp/
+*.tmp
+*.bak
+*.swp
+*.cache
+build/
+dist/
+out/
+Release/
+
+# ============================================================================
+# Database & Data Files
+# ============================================================================
+*.db
+*.sqlite
+*.sqlite3
+*.sql
+firestore/
+data/
+*.csv
+*.xlsx
+*.xls
+
+# ============================================================================
+# Security & Certificates
+# ============================================================================
+*.pem
+*.key
+*.cert
+*.crt
+*.p12
+*.pfx
+secrets/
+credentials/
+
+# ============================================================================
+# Project Specific (Uncomment as needed)
+# ============================================================================
+# /public/uploads/
+# /static/media/
+# /screenshots/
